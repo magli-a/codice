@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>SPA Gatti</title>
+
+        <style>
+            body{
+                padding: 20px;
+                padding-bottom: 20px;
+                text-align: center;
+            }
+
+            img{
+                max-width: 70%;
+            }
+
+            button{
+                padding: 10px;
+                margin: 20px;
+                background-color: azure;
+                border: 1px solid skyblue;
+                border-radius: 3px;
+                font-size: 20px;
+            }
+
+            #miao-salvati{
+                border: 5px solid orange;
+                padding: 20px;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                display: flex;
+            }   
+
+            #miao-salvati img{
+                margin: 5px;
+                height: 100px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div>
+            <button id="nuovo-meda-gatto-miao-67">NUOVO MIAO</button>
+            <button id="salva-meda-gatto-miao-67">SALVA MIAO</button>
+        </div>
+        <img id="meda-gatto-miao-67" src="" alt="">
+        <div id="miao-salvati"></div>
+        <script>
+            const imgTag = document.getElementById("meda-gatto-miao-67");
+            const bottone = document.getElementById("nuovo-meda-gatto-miao-67");
+
+            bottone.addEventListener("click", function(){
+                getCat();
+            });
+            const gattiSalvati=document.getElementById("miao-salvati");
+
+            const salva=document.getElementById("salva-meda-gatto-miao-67");
+            salva.addEventListener("click", function(){
+                const newImg = document.createElement("img");
+                newImg.src = imgTag.src;
+                gattiSalvati.appendChild(newImg);
+            });
+            
+            async function getCat(){
+                const url = "https://cataas.com/cat/gif?json=true";
+                try{
+                    const response = await fetch (url) //manda una richiesta HTTP GET all'url
+                    console.log("RISPOSTA",response);
+                    const data = await response.json(); //estrae i dati JSON dalla risposta
+                    console.log("DATI",data.url);
+                    imgTag.src = data.url;
+                } catch (e){
+                    console.log("ERRORE",e.message);
+                }
+            }
+            getCat();
+        </script>
+    </body>
+</html>
